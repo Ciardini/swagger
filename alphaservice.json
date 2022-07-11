@@ -1,11 +1,11 @@
 {
   "swagger" : "2.0",
   "info" : {
-    "description" : "",
-    "version" : "1.0.0",
+    "description" : "Per uteriori informazioni è possibile consultare il <a href=\"http://-/AlphaService/manual.pdf\">manuale operativo</a>",
+    "version" : "22.7.3",
     "title" : "AlphaService Web API"
   },
-  "host" : "HOST",
+  "host" : "-",
   "basePath" : "/AlphaService/api",
   "tags" : [ {
     "name" : "Agente"
@@ -14,6 +14,8 @@
   }, {
     "name" : "Ditte"
   }, {
+    "name" : "Ramel"
+  }, {
     "name" : "Documenti"
   }, {
     "name" : "Anagrafiche"
@@ -21,6 +23,8 @@
     "name" : "Fornitori, Clienti & Destinazioni"
   }, {
     "name" : "Listini"
+  }, {
+    "name" : "Produzione"
   }, {
     "name" : "Giacenze"
   } ],
@@ -126,56 +130,12 @@
         }
       }
     },
-    "/{company}/articleInterlocutor" : {
-      "post" : {
-        "tags" : [ "Articoli" ],
-        "summary" : "Crea o modifica un articolo fornitore in corrispondenza ai parametri passati",
-        "description" : "",
-        "operationId" : "handleArticleInterlocutor",
-        "consumes" : [ "application/json" ],
-        "produces" : [ "application/json" ],
-        "parameters" : [ {
-          "name" : "company",
-          "in" : "path",
-          "required" : true,
-          "type" : "integer",
-          "format" : "int32"
-        }, {
-          "in" : "body",
-          "name" : "body",
-          "required" : false,
-          "schema" : {
-            "$ref" : "#/definitions/ArticleInterlocutorDTO"
-          }
-        } ],
-        "responses" : {
-          "200" : {
-            "description" : "",
-            "schema" : {
-              "$ref" : "#/definitions/ArticleInterlocutor"
-            }
-          },
-          "400" : {
-            "description" : "Il campo 'message' contiene il dettaglio dell'errore",
-            "schema" : {
-              "$ref" : "#/definitions/RestResponse"
-            }
-          },
-          "500" : {
-            "description" : "Il campo 'message' contiene il dettaglio dell'errore",
-            "schema" : {
-              "$ref" : "#/definitions/RestResponse"
-            }
-          }
-        }
-      }
-    },
     "/{company}/article/{code}/{option}" : {
       "get" : {
         "tags" : [ "Articoli" ],
         "summary" : "Restituisce l'articolo corrispondente al codice e opzione",
         "description" : "",
-        "operationId" : "getArticle_1",
+        "operationId" : "getArticle",
         "produces" : [ "application/json" ],
         "parameters" : [ {
           "name" : "company",
@@ -273,7 +233,7 @@
         "tags" : [ "Articoli" ],
         "summary" : "Restituisce l'articolo corrispondente al codice",
         "description" : "Non specificando l'opzione viene recuperato l'articolo di default",
-        "operationId" : "getArticle",
+        "operationId" : "getArticle_1",
         "produces" : [ "application/json" ],
         "parameters" : [ {
           "name" : "company",
@@ -400,6 +360,50 @@
         }
       }
     },
+    "/{company}/articleInterlocutor" : {
+      "post" : {
+        "tags" : [ "Articoli" ],
+        "summary" : "Crea o modifica un articolo fornitore in corrispondenza ai parametri passati",
+        "description" : "",
+        "operationId" : "handleArticleInterlocutor",
+        "consumes" : [ "application/json" ],
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "company",
+          "in" : "path",
+          "required" : true,
+          "type" : "integer",
+          "format" : "int32"
+        }, {
+          "in" : "body",
+          "name" : "body",
+          "required" : false,
+          "schema" : {
+            "$ref" : "#/definitions/ArticleInterlocutorDTO"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "",
+            "schema" : {
+              "$ref" : "#/definitions/ArticleInterlocutor"
+            }
+          },
+          "400" : {
+            "description" : "Il campo 'message' contiene il dettaglio dell'errore",
+            "schema" : {
+              "$ref" : "#/definitions/RestResponse"
+            }
+          },
+          "500" : {
+            "description" : "Il campo 'message' contiene il dettaglio dell'errore",
+            "schema" : {
+              "$ref" : "#/definitions/RestResponse"
+            }
+          }
+        }
+      }
+    },
     "/{company}/articles" : {
       "get" : {
         "tags" : [ "Articoli" ],
@@ -458,12 +462,12 @@
         }
       }
     },
-    "/{company}/article" : {
+    "/{company}/articlePrice" : {
       "post" : {
         "tags" : [ "Articoli" ],
-        "summary" : "Crea o modifica un articolo in corrispondenza ai parametri passati",
+        "summary" : "Crea o modifica il listino di vendita di un articolo in corrispondenza ai parametri passati",
         "description" : "",
-        "operationId" : "handleArticle",
+        "operationId" : "handlePrice",
         "consumes" : [ "application/json" ],
         "produces" : [ "application/json" ],
         "parameters" : [ {
@@ -477,14 +481,14 @@
           "name" : "body",
           "required" : false,
           "schema" : {
-            "$ref" : "#/definitions/ArticleDTO"
+            "$ref" : "#/definitions/ArticlePriceDTO"
           }
         } ],
         "responses" : {
           "200" : {
             "description" : "",
             "schema" : {
-              "$ref" : "#/definitions/Article"
+              "$ref" : "#/definitions/ArticlePrice"
             }
           },
           "400" : {
@@ -529,50 +533,6 @@
             "description" : "",
             "schema" : {
               "$ref" : "#/definitions/Barcode"
-            }
-          },
-          "400" : {
-            "description" : "Il campo 'message' contiene il dettaglio dell'errore",
-            "schema" : {
-              "$ref" : "#/definitions/RestResponse"
-            }
-          },
-          "500" : {
-            "description" : "Il campo 'message' contiene il dettaglio dell'errore",
-            "schema" : {
-              "$ref" : "#/definitions/RestResponse"
-            }
-          }
-        }
-      }
-    },
-    "/{company}/articlePrice" : {
-      "post" : {
-        "tags" : [ "Articoli" ],
-        "summary" : "Crea o modifica il listino di vendita di un articolo in corrispondenza ai parametri passati",
-        "description" : "",
-        "operationId" : "handlePrice",
-        "consumes" : [ "application/json" ],
-        "produces" : [ "application/json" ],
-        "parameters" : [ {
-          "name" : "company",
-          "in" : "path",
-          "required" : true,
-          "type" : "integer",
-          "format" : "int32"
-        }, {
-          "in" : "body",
-          "name" : "body",
-          "required" : false,
-          "schema" : {
-            "$ref" : "#/definitions/ArticlePriceDTO"
-          }
-        } ],
-        "responses" : {
-          "200" : {
-            "description" : "",
-            "schema" : {
-              "$ref" : "#/definitions/ArticlePrice"
             }
           },
           "400" : {
@@ -678,6 +638,50 @@
         }
       }
     },
+    "/{company}/article" : {
+      "post" : {
+        "tags" : [ "Articoli" ],
+        "summary" : "Crea o modifica un articolo in corrispondenza ai parametri passati",
+        "description" : "",
+        "operationId" : "handleArticle",
+        "consumes" : [ "application/json" ],
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "company",
+          "in" : "path",
+          "required" : true,
+          "type" : "integer",
+          "format" : "int32"
+        }, {
+          "in" : "body",
+          "name" : "body",
+          "required" : false,
+          "schema" : {
+            "$ref" : "#/definitions/ArticleDTO"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "",
+            "schema" : {
+              "$ref" : "#/definitions/Article"
+            }
+          },
+          "400" : {
+            "description" : "Il campo 'message' contiene il dettaglio dell'errore",
+            "schema" : {
+              "$ref" : "#/definitions/RestResponse"
+            }
+          },
+          "500" : {
+            "description" : "Il campo 'message' contiene il dettaglio dell'errore",
+            "schema" : {
+              "$ref" : "#/definitions/RestResponse"
+            }
+          }
+        }
+      }
+    },
     "/companies" : {
       "get" : {
         "tags" : [ "Ditte" ],
@@ -708,15 +712,29 @@
         }
       }
     },
-    "/{company}/document" : {
-      "post" : {
-        "tags" : [ "Documenti" ],
-        "summary" : "Crea un nuovo documento in corrispondenza dei parametri inviati",
+    "/{company}/ramel/jobDocuments" : {
+      "get" : {
+        "tags" : [ "Ramel" ],
+        "summary" : "Restituisce la lista dei documenti con commessa",
         "description" : "",
-        "operationId" : "createDocument",
+        "operationId" : "getJobDocumentList",
         "consumes" : [ "application/json" ],
         "produces" : [ "application/json" ],
         "parameters" : [ {
+          "name" : "page",
+          "in" : "query",
+          "required" : false,
+          "type" : "integer",
+          "default" : 0,
+          "format" : "int32"
+        }, {
+          "name" : "per_page",
+          "in" : "query",
+          "required" : false,
+          "type" : "integer",
+          "default" : 100,
+          "format" : "int32"
+        }, {
           "name" : "company",
           "in" : "path",
           "required" : true,
@@ -727,14 +745,14 @@
           "name" : "body",
           "required" : false,
           "schema" : {
-            "$ref" : "#/definitions/DocumentHeaderDTO"
+            "$ref" : "#/definitions/SearchBodyList"
           }
         } ],
         "responses" : {
           "200" : {
             "description" : "",
             "schema" : {
-              "$ref" : "#/definitions/DocumentResult"
+              "$ref" : "#/definitions/IJobDocument"
             }
           },
           "400" : {
@@ -810,6 +828,50 @@
         }
       }
     },
+    "/{company}/document" : {
+      "post" : {
+        "tags" : [ "Documenti" ],
+        "summary" : "Crea un nuovo documento in corrispondenza dei parametri inviati",
+        "description" : "",
+        "operationId" : "createDocument",
+        "consumes" : [ "application/json" ],
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "company",
+          "in" : "path",
+          "required" : true,
+          "type" : "integer",
+          "format" : "int32"
+        }, {
+          "in" : "body",
+          "name" : "body",
+          "required" : false,
+          "schema" : {
+            "$ref" : "#/definitions/DocumentHeaderDTO"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "",
+            "schema" : {
+              "$ref" : "#/definitions/DocumentResult"
+            }
+          },
+          "400" : {
+            "description" : "Il campo 'message' contiene il dettaglio dell'errore",
+            "schema" : {
+              "$ref" : "#/definitions/RestResponse"
+            }
+          },
+          "500" : {
+            "description" : "Il campo 'message' contiene il dettaglio dell'errore",
+            "schema" : {
+              "$ref" : "#/definitions/RestResponse"
+            }
+          }
+        }
+      }
+    },
     "/{company}/document/{registrationNumber}" : {
       "get" : {
         "tags" : [ "Documenti" ],
@@ -851,13 +913,12 @@
         }
       }
     },
-    "/{company}/statisticalGroups1" : {
+    "/{company}/documentFlow/{registrationNumber}" : {
       "get" : {
-        "tags" : [ "Anagrafiche" ],
-        "summary" : "Restituisce la lista dei gruppi statistici 1",
+        "tags" : [ "Documenti" ],
+        "summary" : "Restituisce la lista dei documenti i quali derivano dal flusso del numero di registrazione",
         "description" : "",
-        "operationId" : "getStatisticalGroup1List",
-        "consumes" : [ "application/json" ],
+        "operationId" : "getDocumentFlow",
         "produces" : [ "application/json" ],
         "parameters" : [ {
           "name" : "page",
@@ -880,63 +941,10 @@
           "type" : "integer",
           "format" : "int32"
         }, {
-          "in" : "body",
-          "name" : "body",
-          "required" : false,
-          "schema" : {
-            "$ref" : "#/definitions/SearchBodyList"
-          }
-        } ],
-        "responses" : {
-          "200" : {
-            "description" : "",
-            "schema" : {
-              "$ref" : "#/definitions/StatisticalGroup1"
-            }
-          },
-          "400" : {
-            "description" : "Il campo 'message' contiene il dettaglio dell'errore",
-            "schema" : {
-              "$ref" : "#/definitions/RestResponse"
-            }
-          },
-          "500" : {
-            "description" : "Il campo 'message' contiene il dettaglio dell'errore",
-            "schema" : {
-              "$ref" : "#/definitions/RestResponse"
-            }
-          }
-        }
-      }
-    },
-    "/{company}/interlocutorGroupings3" : {
-      "get" : {
-        "tags" : [ "Anagrafiche" ],
-        "summary" : "Restituisce la lista dei raggruppamenti clienti 3",
-        "description" : "",
-        "operationId" : "getInterlocutorGrouping3List",
-        "consumes" : [ "application/json" ],
-        "produces" : [ "application/json" ],
-        "parameters" : [ {
-          "name" : "page",
-          "in" : "query",
-          "required" : false,
-          "type" : "integer",
-          "default" : 0,
-          "format" : "int32"
-        }, {
-          "name" : "per_page",
-          "in" : "query",
-          "required" : false,
-          "type" : "integer",
-          "default" : 100,
-          "format" : "int32"
-        }, {
-          "name" : "company",
+          "name" : "registrationNumber",
           "in" : "path",
           "required" : true,
-          "type" : "integer",
-          "format" : "int32"
+          "type" : "string"
         }, {
           "in" : "body",
           "name" : "body",
@@ -949,123 +957,7 @@
           "200" : {
             "description" : "",
             "schema" : {
-              "$ref" : "#/definitions/InterlocutorGrouping3"
-            }
-          },
-          "400" : {
-            "description" : "Il campo 'message' contiene il dettaglio dell'errore",
-            "schema" : {
-              "$ref" : "#/definitions/RestResponse"
-            }
-          },
-          "500" : {
-            "description" : "Il campo 'message' contiene il dettaglio dell'errore",
-            "schema" : {
-              "$ref" : "#/definitions/RestResponse"
-            }
-          }
-        }
-      }
-    },
-    "/{company}/interlocutorGroupings1" : {
-      "get" : {
-        "tags" : [ "Anagrafiche" ],
-        "summary" : "Restituisce la lista dei raggruppamenti clienti 1",
-        "description" : "",
-        "operationId" : "getInterlocutorGrouping1List",
-        "consumes" : [ "application/json" ],
-        "produces" : [ "application/json" ],
-        "parameters" : [ {
-          "name" : "page",
-          "in" : "query",
-          "required" : false,
-          "type" : "integer",
-          "default" : 0,
-          "format" : "int32"
-        }, {
-          "name" : "per_page",
-          "in" : "query",
-          "required" : false,
-          "type" : "integer",
-          "default" : 100,
-          "format" : "int32"
-        }, {
-          "name" : "company",
-          "in" : "path",
-          "required" : true,
-          "type" : "integer",
-          "format" : "int32"
-        }, {
-          "in" : "body",
-          "name" : "body",
-          "required" : false,
-          "schema" : {
-            "$ref" : "#/definitions/SearchBodyList"
-          }
-        } ],
-        "responses" : {
-          "200" : {
-            "description" : "",
-            "schema" : {
-              "$ref" : "#/definitions/InterlocutorGrouping1"
-            }
-          },
-          "400" : {
-            "description" : "Il campo 'message' contiene il dettaglio dell'errore",
-            "schema" : {
-              "$ref" : "#/definitions/RestResponse"
-            }
-          },
-          "500" : {
-            "description" : "Il campo 'message' contiene il dettaglio dell'errore",
-            "schema" : {
-              "$ref" : "#/definitions/RestResponse"
-            }
-          }
-        }
-      }
-    },
-    "/{company}/interlocutorGroupings2" : {
-      "get" : {
-        "tags" : [ "Anagrafiche" ],
-        "summary" : "Restituisce la lista dei raggruppamenti clienti 2",
-        "description" : "",
-        "operationId" : "getInterlocutorGrouping2List",
-        "consumes" : [ "application/json" ],
-        "produces" : [ "application/json" ],
-        "parameters" : [ {
-          "name" : "page",
-          "in" : "query",
-          "required" : false,
-          "type" : "integer",
-          "default" : 0,
-          "format" : "int32"
-        }, {
-          "name" : "per_page",
-          "in" : "query",
-          "required" : false,
-          "type" : "integer",
-          "default" : 100,
-          "format" : "int32"
-        }, {
-          "name" : "company",
-          "in" : "path",
-          "required" : true,
-          "type" : "integer",
-          "format" : "int32"
-        }, {
-          "in" : "body",
-          "name" : "body",
-          "required" : false,
-          "schema" : {
-            "$ref" : "#/definitions/SearchBodyList"
-          }
-        } ],
-        "responses" : {
-          "200" : {
-            "description" : "",
-            "schema" : {
-              "$ref" : "#/definitions/InterlocutorGrouping2"
+              "$ref" : "#/definitions/DocumentHeader"
             }
           },
           "400" : {
@@ -1141,12 +1033,12 @@
         }
       }
     },
-    "/{company}/brands" : {
+    "/{company}/interlocutorGroupings2" : {
       "get" : {
         "tags" : [ "Anagrafiche" ],
-        "summary" : "Restituisce la lista delle marche disponibili",
+        "summary" : "Restituisce la lista dei raggruppamenti clienti 2",
         "description" : "",
-        "operationId" : "getBrandList",
+        "operationId" : "getInterlocutorGrouping2List",
         "consumes" : [ "application/json" ],
         "produces" : [ "application/json" ],
         "parameters" : [ {
@@ -1181,7 +1073,7 @@
           "200" : {
             "description" : "",
             "schema" : {
-              "$ref" : "#/definitions/Brand"
+              "$ref" : "#/definitions/InterlocutorGrouping2"
             }
           },
           "400" : {
@@ -1199,12 +1091,12 @@
         }
       }
     },
-    "/{company}/expenses" : {
+    "/{company}/interlocutorGroupings1" : {
       "get" : {
         "tags" : [ "Anagrafiche" ],
-        "summary" : "Restituisce la lista delle spese",
+        "summary" : "Restituisce la lista dei raggruppamenti clienti 1",
         "description" : "",
-        "operationId" : "getExpenseList",
+        "operationId" : "getInterlocutorGrouping1List",
         "consumes" : [ "application/json" ],
         "produces" : [ "application/json" ],
         "parameters" : [ {
@@ -1239,7 +1131,123 @@
           "200" : {
             "description" : "",
             "schema" : {
-              "$ref" : "#/definitions/Expense"
+              "$ref" : "#/definitions/InterlocutorGrouping1"
+            }
+          },
+          "400" : {
+            "description" : "Il campo 'message' contiene il dettaglio dell'errore",
+            "schema" : {
+              "$ref" : "#/definitions/RestResponse"
+            }
+          },
+          "500" : {
+            "description" : "Il campo 'message' contiene il dettaglio dell'errore",
+            "schema" : {
+              "$ref" : "#/definitions/RestResponse"
+            }
+          }
+        }
+      }
+    },
+    "/{company}/interlocutorGroupings3" : {
+      "get" : {
+        "tags" : [ "Anagrafiche" ],
+        "summary" : "Restituisce la lista dei raggruppamenti clienti 3",
+        "description" : "",
+        "operationId" : "getInterlocutorGrouping3List",
+        "consumes" : [ "application/json" ],
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "page",
+          "in" : "query",
+          "required" : false,
+          "type" : "integer",
+          "default" : 0,
+          "format" : "int32"
+        }, {
+          "name" : "per_page",
+          "in" : "query",
+          "required" : false,
+          "type" : "integer",
+          "default" : 100,
+          "format" : "int32"
+        }, {
+          "name" : "company",
+          "in" : "path",
+          "required" : true,
+          "type" : "integer",
+          "format" : "int32"
+        }, {
+          "in" : "body",
+          "name" : "body",
+          "required" : false,
+          "schema" : {
+            "$ref" : "#/definitions/SearchBodyList"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "",
+            "schema" : {
+              "$ref" : "#/definitions/InterlocutorGrouping3"
+            }
+          },
+          "400" : {
+            "description" : "Il campo 'message' contiene il dettaglio dell'errore",
+            "schema" : {
+              "$ref" : "#/definitions/RestResponse"
+            }
+          },
+          "500" : {
+            "description" : "Il campo 'message' contiene il dettaglio dell'errore",
+            "schema" : {
+              "$ref" : "#/definitions/RestResponse"
+            }
+          }
+        }
+      }
+    },
+    "/{company}/statisticalGroups1" : {
+      "get" : {
+        "tags" : [ "Anagrafiche" ],
+        "summary" : "Restituisce la lista dei gruppi statistici 1",
+        "description" : "",
+        "operationId" : "getStatisticalGroup1List",
+        "consumes" : [ "application/json" ],
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "page",
+          "in" : "query",
+          "required" : false,
+          "type" : "integer",
+          "default" : 0,
+          "format" : "int32"
+        }, {
+          "name" : "per_page",
+          "in" : "query",
+          "required" : false,
+          "type" : "integer",
+          "default" : 100,
+          "format" : "int32"
+        }, {
+          "name" : "company",
+          "in" : "path",
+          "required" : true,
+          "type" : "integer",
+          "format" : "int32"
+        }, {
+          "in" : "body",
+          "name" : "body",
+          "required" : false,
+          "schema" : {
+            "$ref" : "#/definitions/SearchBodyList"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "",
+            "schema" : {
+              "$ref" : "#/definitions/StatisticalGroup1"
             }
           },
           "400" : {
@@ -1315,12 +1323,12 @@
         }
       }
     },
-    "/{company}/payments" : {
+    "/{company}/subFamilies" : {
       "get" : {
         "tags" : [ "Anagrafiche" ],
-        "summary" : "Restituisce la lista delle condizioni di pagamento",
+        "summary" : "Restituisce la lista di sotto famiglie disponibili",
         "description" : "",
-        "operationId" : "getPaymentList",
+        "operationId" : "getSubFamilyList",
         "consumes" : [ "application/json" ],
         "produces" : [ "application/json" ],
         "parameters" : [ {
@@ -1355,181 +1363,7 @@
           "200" : {
             "description" : "",
             "schema" : {
-              "$ref" : "#/definitions/Payment"
-            }
-          },
-          "400" : {
-            "description" : "Il campo 'message' contiene il dettaglio dell'errore",
-            "schema" : {
-              "$ref" : "#/definitions/RestResponse"
-            }
-          },
-          "500" : {
-            "description" : "Il campo 'message' contiene il dettaglio dell'errore",
-            "schema" : {
-              "$ref" : "#/definitions/RestResponse"
-            }
-          }
-        }
-      }
-    },
-    "/{company}/vats" : {
-      "get" : {
-        "tags" : [ "Anagrafiche" ],
-        "summary" : "Restituisce la lista delle aliquate iva",
-        "description" : "",
-        "operationId" : "getVatList",
-        "consumes" : [ "application/json" ],
-        "produces" : [ "application/json" ],
-        "parameters" : [ {
-          "name" : "page",
-          "in" : "query",
-          "required" : false,
-          "type" : "integer",
-          "default" : 0,
-          "format" : "int32"
-        }, {
-          "name" : "per_page",
-          "in" : "query",
-          "required" : false,
-          "type" : "integer",
-          "default" : 100,
-          "format" : "int32"
-        }, {
-          "name" : "company",
-          "in" : "path",
-          "required" : true,
-          "type" : "integer",
-          "format" : "int32"
-        }, {
-          "in" : "body",
-          "name" : "body",
-          "required" : false,
-          "schema" : {
-            "$ref" : "#/definitions/SearchBodyList"
-          }
-        } ],
-        "responses" : {
-          "200" : {
-            "description" : "",
-            "schema" : {
-              "$ref" : "#/definitions/Vat"
-            }
-          },
-          "400" : {
-            "description" : "Il campo 'message' contiene il dettaglio dell'errore",
-            "schema" : {
-              "$ref" : "#/definitions/RestResponse"
-            }
-          },
-          "500" : {
-            "description" : "Il campo 'message' contiene il dettaglio dell'errore",
-            "schema" : {
-              "$ref" : "#/definitions/RestResponse"
-            }
-          }
-        }
-      }
-    },
-    "/{company}/families" : {
-      "get" : {
-        "tags" : [ "Anagrafiche" ],
-        "summary" : "Restituisce la lista di famiglie disponibili",
-        "description" : "",
-        "operationId" : "getFamilyList",
-        "consumes" : [ "application/json" ],
-        "produces" : [ "application/json" ],
-        "parameters" : [ {
-          "name" : "page",
-          "in" : "query",
-          "required" : false,
-          "type" : "integer",
-          "default" : 0,
-          "format" : "int32"
-        }, {
-          "name" : "per_page",
-          "in" : "query",
-          "required" : false,
-          "type" : "integer",
-          "default" : 100,
-          "format" : "int32"
-        }, {
-          "name" : "company",
-          "in" : "path",
-          "required" : true,
-          "type" : "integer",
-          "format" : "int32"
-        }, {
-          "in" : "body",
-          "name" : "body",
-          "required" : false,
-          "schema" : {
-            "$ref" : "#/definitions/SearchBodyList"
-          }
-        } ],
-        "responses" : {
-          "200" : {
-            "description" : "",
-            "schema" : {
-              "$ref" : "#/definitions/Family"
-            }
-          },
-          "400" : {
-            "description" : "Il campo 'message' contiene il dettaglio dell'errore",
-            "schema" : {
-              "$ref" : "#/definitions/RestResponse"
-            }
-          },
-          "500" : {
-            "description" : "Il campo 'message' contiene il dettaglio dell'errore",
-            "schema" : {
-              "$ref" : "#/definitions/RestResponse"
-            }
-          }
-        }
-      }
-    },
-    "/{company}/groups" : {
-      "get" : {
-        "tags" : [ "Anagrafiche" ],
-        "summary" : "Restituisce la lista di gruppi disponibili",
-        "description" : "",
-        "operationId" : "getGroupList",
-        "consumes" : [ "application/json" ],
-        "produces" : [ "application/json" ],
-        "parameters" : [ {
-          "name" : "page",
-          "in" : "query",
-          "required" : false,
-          "type" : "integer",
-          "default" : 0,
-          "format" : "int32"
-        }, {
-          "name" : "per_page",
-          "in" : "query",
-          "required" : false,
-          "type" : "integer",
-          "default" : 100,
-          "format" : "int32"
-        }, {
-          "name" : "company",
-          "in" : "path",
-          "required" : true,
-          "type" : "integer",
-          "format" : "int32"
-        }, {
-          "in" : "body",
-          "name" : "body",
-          "required" : false,
-          "schema" : {
-            "$ref" : "#/definitions/SearchBodyList"
-          }
-        } ],
-        "responses" : {
-          "200" : {
-            "description" : "",
-            "schema" : {
-              "$ref" : "#/definitions/Group"
+              "$ref" : "#/definitions/SubFamily"
             }
           },
           "400" : {
@@ -1605,6 +1439,64 @@
         }
       }
     },
+    "/{company}/expenses" : {
+      "get" : {
+        "tags" : [ "Anagrafiche" ],
+        "summary" : "Restituisce la lista delle spese",
+        "description" : "",
+        "operationId" : "getExpenseList",
+        "consumes" : [ "application/json" ],
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "page",
+          "in" : "query",
+          "required" : false,
+          "type" : "integer",
+          "default" : 0,
+          "format" : "int32"
+        }, {
+          "name" : "per_page",
+          "in" : "query",
+          "required" : false,
+          "type" : "integer",
+          "default" : 100,
+          "format" : "int32"
+        }, {
+          "name" : "company",
+          "in" : "path",
+          "required" : true,
+          "type" : "integer",
+          "format" : "int32"
+        }, {
+          "in" : "body",
+          "name" : "body",
+          "required" : false,
+          "schema" : {
+            "$ref" : "#/definitions/SearchBodyList"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "",
+            "schema" : {
+              "$ref" : "#/definitions/Expense"
+            }
+          },
+          "400" : {
+            "description" : "Il campo 'message' contiene il dettaglio dell'errore",
+            "schema" : {
+              "$ref" : "#/definitions/RestResponse"
+            }
+          },
+          "500" : {
+            "description" : "Il campo 'message' contiene il dettaglio dell'errore",
+            "schema" : {
+              "$ref" : "#/definitions/RestResponse"
+            }
+          }
+        }
+      }
+    },
     "/{company}/fixedTexts" : {
       "get" : {
         "tags" : [ "Anagrafiche" ],
@@ -1663,12 +1555,12 @@
         }
       }
     },
-    "/{company}/countries" : {
+    "/{company}/brands" : {
       "get" : {
         "tags" : [ "Anagrafiche" ],
-        "summary" : "Restituisce la lista delle nazioni disponibili",
+        "summary" : "Restituisce la lista delle marche disponibili",
         "description" : "",
-        "operationId" : "getCountryList",
+        "operationId" : "getBrandList",
         "consumes" : [ "application/json" ],
         "produces" : [ "application/json" ],
         "parameters" : [ {
@@ -1703,7 +1595,239 @@
           "200" : {
             "description" : "",
             "schema" : {
-              "$ref" : "#/definitions/Country"
+              "$ref" : "#/definitions/Brand"
+            }
+          },
+          "400" : {
+            "description" : "Il campo 'message' contiene il dettaglio dell'errore",
+            "schema" : {
+              "$ref" : "#/definitions/RestResponse"
+            }
+          },
+          "500" : {
+            "description" : "Il campo 'message' contiene il dettaglio dell'errore",
+            "schema" : {
+              "$ref" : "#/definitions/RestResponse"
+            }
+          }
+        }
+      }
+    },
+    "/{company}/families" : {
+      "get" : {
+        "tags" : [ "Anagrafiche" ],
+        "summary" : "Restituisce la lista di famiglie disponibili",
+        "description" : "",
+        "operationId" : "getFamilyList",
+        "consumes" : [ "application/json" ],
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "page",
+          "in" : "query",
+          "required" : false,
+          "type" : "integer",
+          "default" : 0,
+          "format" : "int32"
+        }, {
+          "name" : "per_page",
+          "in" : "query",
+          "required" : false,
+          "type" : "integer",
+          "default" : 100,
+          "format" : "int32"
+        }, {
+          "name" : "company",
+          "in" : "path",
+          "required" : true,
+          "type" : "integer",
+          "format" : "int32"
+        }, {
+          "in" : "body",
+          "name" : "body",
+          "required" : false,
+          "schema" : {
+            "$ref" : "#/definitions/SearchBodyList"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "",
+            "schema" : {
+              "$ref" : "#/definitions/Family"
+            }
+          },
+          "400" : {
+            "description" : "Il campo 'message' contiene il dettaglio dell'errore",
+            "schema" : {
+              "$ref" : "#/definitions/RestResponse"
+            }
+          },
+          "500" : {
+            "description" : "Il campo 'message' contiene il dettaglio dell'errore",
+            "schema" : {
+              "$ref" : "#/definitions/RestResponse"
+            }
+          }
+        }
+      }
+    },
+    "/{company}/vats" : {
+      "get" : {
+        "tags" : [ "Anagrafiche" ],
+        "summary" : "Restituisce la lista delle aliquate iva",
+        "description" : "",
+        "operationId" : "getVatList",
+        "consumes" : [ "application/json" ],
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "page",
+          "in" : "query",
+          "required" : false,
+          "type" : "integer",
+          "default" : 0,
+          "format" : "int32"
+        }, {
+          "name" : "per_page",
+          "in" : "query",
+          "required" : false,
+          "type" : "integer",
+          "default" : 100,
+          "format" : "int32"
+        }, {
+          "name" : "company",
+          "in" : "path",
+          "required" : true,
+          "type" : "integer",
+          "format" : "int32"
+        }, {
+          "in" : "body",
+          "name" : "body",
+          "required" : false,
+          "schema" : {
+            "$ref" : "#/definitions/SearchBodyList"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "",
+            "schema" : {
+              "$ref" : "#/definitions/Vat"
+            }
+          },
+          "400" : {
+            "description" : "Il campo 'message' contiene il dettaglio dell'errore",
+            "schema" : {
+              "$ref" : "#/definitions/RestResponse"
+            }
+          },
+          "500" : {
+            "description" : "Il campo 'message' contiene il dettaglio dell'errore",
+            "schema" : {
+              "$ref" : "#/definitions/RestResponse"
+            }
+          }
+        }
+      }
+    },
+    "/{company}/contacts" : {
+      "get" : {
+        "tags" : [ "Anagrafiche" ],
+        "summary" : "Restituisce la lista dei contatti",
+        "description" : "",
+        "operationId" : "getContacts",
+        "consumes" : [ "application/json" ],
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "page",
+          "in" : "query",
+          "required" : false,
+          "type" : "integer",
+          "default" : 0,
+          "format" : "int32"
+        }, {
+          "name" : "per_page",
+          "in" : "query",
+          "required" : false,
+          "type" : "integer",
+          "default" : 100,
+          "format" : "int32"
+        }, {
+          "name" : "company",
+          "in" : "path",
+          "required" : true,
+          "type" : "integer",
+          "format" : "int32"
+        }, {
+          "in" : "body",
+          "name" : "body",
+          "required" : false,
+          "schema" : {
+            "$ref" : "#/definitions/SearchBodyList"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "",
+            "schema" : {
+              "$ref" : "#/definitions/Vat"
+            }
+          },
+          "400" : {
+            "description" : "Il campo 'message' contiene il dettaglio dell'errore",
+            "schema" : {
+              "$ref" : "#/definitions/RestResponse"
+            }
+          },
+          "500" : {
+            "description" : "Il campo 'message' contiene il dettaglio dell'errore",
+            "schema" : {
+              "$ref" : "#/definitions/RestResponse"
+            }
+          }
+        }
+      }
+    },
+    "/{company}/groups" : {
+      "get" : {
+        "tags" : [ "Anagrafiche" ],
+        "summary" : "Restituisce la lista di gruppi disponibili",
+        "description" : "",
+        "operationId" : "getGroupList",
+        "consumes" : [ "application/json" ],
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "page",
+          "in" : "query",
+          "required" : false,
+          "type" : "integer",
+          "default" : 0,
+          "format" : "int32"
+        }, {
+          "name" : "per_page",
+          "in" : "query",
+          "required" : false,
+          "type" : "integer",
+          "default" : 100,
+          "format" : "int32"
+        }, {
+          "name" : "company",
+          "in" : "path",
+          "required" : true,
+          "type" : "integer",
+          "format" : "int32"
+        }, {
+          "in" : "body",
+          "name" : "body",
+          "required" : false,
+          "schema" : {
+            "$ref" : "#/definitions/SearchBodyList"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "",
+            "schema" : {
+              "$ref" : "#/definitions/Group"
             }
           },
           "400" : {
@@ -1779,12 +1903,12 @@
         }
       }
     },
-    "/{company}/subFamilies" : {
+    "/{company}/payments" : {
       "get" : {
         "tags" : [ "Anagrafiche" ],
-        "summary" : "Restituisce la lista di sotto famiglie disponibili",
+        "summary" : "Restituisce la lista delle condizioni di pagamento",
         "description" : "",
-        "operationId" : "getSubFamilyList",
+        "operationId" : "getPaymentList",
         "consumes" : [ "application/json" ],
         "produces" : [ "application/json" ],
         "parameters" : [ {
@@ -1819,7 +1943,65 @@
           "200" : {
             "description" : "",
             "schema" : {
-              "$ref" : "#/definitions/SubFamily"
+              "$ref" : "#/definitions/Payment"
+            }
+          },
+          "400" : {
+            "description" : "Il campo 'message' contiene il dettaglio dell'errore",
+            "schema" : {
+              "$ref" : "#/definitions/RestResponse"
+            }
+          },
+          "500" : {
+            "description" : "Il campo 'message' contiene il dettaglio dell'errore",
+            "schema" : {
+              "$ref" : "#/definitions/RestResponse"
+            }
+          }
+        }
+      }
+    },
+    "/{company}/countries" : {
+      "get" : {
+        "tags" : [ "Anagrafiche" ],
+        "summary" : "Restituisce la lista delle nazioni disponibili",
+        "description" : "",
+        "operationId" : "getCountryList",
+        "consumes" : [ "application/json" ],
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "page",
+          "in" : "query",
+          "required" : false,
+          "type" : "integer",
+          "default" : 0,
+          "format" : "int32"
+        }, {
+          "name" : "per_page",
+          "in" : "query",
+          "required" : false,
+          "type" : "integer",
+          "default" : 100,
+          "format" : "int32"
+        }, {
+          "name" : "company",
+          "in" : "path",
+          "required" : true,
+          "type" : "integer",
+          "format" : "int32"
+        }, {
+          "in" : "body",
+          "name" : "body",
+          "required" : false,
+          "schema" : {
+            "$ref" : "#/definitions/SearchBodyList"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "",
+            "schema" : {
+              "$ref" : "#/definitions/Country"
             }
           },
           "400" : {
@@ -1895,12 +2077,13 @@
         }
       }
     },
-    "/{company}/interlocutor/{code}/{type}" : {
-      "get" : {
+    "/{company}/interlocutor" : {
+      "post" : {
         "tags" : [ "Fornitori, Clienti & Destinazioni" ],
-        "summary" : "Restituisce i dati anagrafici dell'interlocutore corrispondente all'id",
-        "description" : "",
-        "operationId" : "getInterlocutor",
+        "summary" : "Crea oppure modifica cliente / fornitore in corrispondenza dei parametri inviati",
+        "description" : "Le condizioni di pagamento, la fatturazione elettronica e la nazione se non sono presenti vengono sovrascritti con l'impostazione di default.",
+        "operationId" : "handleInterlocutor",
+        "consumes" : [ "application/json" ],
         "produces" : [ "application/json" ],
         "parameters" : [ {
           "name" : "company",
@@ -1909,16 +2092,12 @@
           "type" : "integer",
           "format" : "int32"
         }, {
-          "name" : "code",
-          "in" : "path",
-          "required" : true,
-          "type" : "string"
-        }, {
-          "name" : "type",
-          "in" : "path",
-          "required" : true,
-          "type" : "integer",
-          "format" : "int32"
+          "in" : "body",
+          "name" : "body",
+          "required" : false,
+          "schema" : {
+            "$ref" : "#/definitions/InterlocutorDTO"
+          }
         } ],
         "responses" : {
           "200" : {
@@ -1986,13 +2165,12 @@
         }
       }
     },
-    "/{company}/interlocutor" : {
-      "post" : {
+    "/{company}/interlocutor/{code}/{type}" : {
+      "get" : {
         "tags" : [ "Fornitori, Clienti & Destinazioni" ],
-        "summary" : "Crea oppure modifica cliente / fornitore in corrispondenza dei parametri inviati",
-        "description" : "Le condizioni di pagamento, la fatturazione elettronica e la nazione se non sono presenti vengono sovrascritti con l'impostazione di default.",
-        "operationId" : "handleInterlocutor",
-        "consumes" : [ "application/json" ],
+        "summary" : "Restituisce i dati anagrafici dell'interlocutore corrispondente all'id",
+        "description" : "",
+        "operationId" : "getInterlocutor",
         "produces" : [ "application/json" ],
         "parameters" : [ {
           "name" : "company",
@@ -2001,12 +2179,16 @@
           "type" : "integer",
           "format" : "int32"
         }, {
-          "in" : "body",
-          "name" : "body",
-          "required" : false,
-          "schema" : {
-            "$ref" : "#/definitions/InterlocutorDTO"
-          }
+          "name" : "code",
+          "in" : "path",
+          "required" : true,
+          "type" : "string"
+        }, {
+          "name" : "type",
+          "in" : "path",
+          "required" : true,
+          "type" : "integer",
+          "format" : "int32"
         } ],
         "responses" : {
           "200" : {
@@ -2071,6 +2253,337 @@
             "description" : "",
             "schema" : {
               "$ref" : "#/definitions/PriceArticleInterlocutor"
+            }
+          },
+          "400" : {
+            "description" : "Il campo 'message' contiene il dettaglio dell'errore",
+            "schema" : {
+              "$ref" : "#/definitions/RestResponse"
+            }
+          },
+          "500" : {
+            "description" : "Il campo 'message' contiene il dettaglio dell'errore",
+            "schema" : {
+              "$ref" : "#/definitions/RestResponse"
+            }
+          }
+        }
+      }
+    },
+    "/{company}/priceArticleInterlocutorDestinations" : {
+      "get" : {
+        "tags" : [ "Listini" ],
+        "summary" : "Restituisce la lista dei listini articolo cliente e destinazione",
+        "description" : "Listino anagrafico LI19",
+        "operationId" : "getPriceArticleInterlocutorDestinationList",
+        "consumes" : [ "application/json" ],
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "page",
+          "in" : "query",
+          "required" : false,
+          "type" : "integer",
+          "default" : 0,
+          "format" : "int32"
+        }, {
+          "name" : "per_page",
+          "in" : "query",
+          "required" : false,
+          "type" : "integer",
+          "default" : 100,
+          "format" : "int32"
+        }, {
+          "name" : "company",
+          "in" : "path",
+          "required" : true,
+          "type" : "integer",
+          "format" : "int32"
+        }, {
+          "in" : "body",
+          "name" : "body",
+          "required" : false,
+          "schema" : {
+            "$ref" : "#/definitions/SearchBodyList"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "",
+            "schema" : {
+              "$ref" : "#/definitions/PriceArticleInterlocutorDestination"
+            }
+          },
+          "400" : {
+            "description" : "Il campo 'message' contiene il dettaglio dell'errore",
+            "schema" : {
+              "$ref" : "#/definitions/RestResponse"
+            }
+          },
+          "500" : {
+            "description" : "Il campo 'message' contiene il dettaglio dell'errore",
+            "schema" : {
+              "$ref" : "#/definitions/RestResponse"
+            }
+          }
+        }
+      }
+    },
+    "/{company}/qualifications" : {
+      "get" : {
+        "tags" : [ "Produzione" ],
+        "summary" : "Restituisce una lista dei dipartimenti corrispondente ai parametri di ricerca",
+        "description" : "",
+        "operationId" : "getQualificationList",
+        "consumes" : [ "application/json" ],
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "page",
+          "in" : "query",
+          "required" : false,
+          "type" : "integer",
+          "default" : 0,
+          "format" : "int32"
+        }, {
+          "name" : "per_page",
+          "in" : "query",
+          "required" : false,
+          "type" : "integer",
+          "default" : 100,
+          "format" : "int32"
+        }, {
+          "name" : "company",
+          "in" : "path",
+          "required" : true,
+          "type" : "integer",
+          "format" : "int32"
+        }, {
+          "in" : "body",
+          "name" : "body",
+          "required" : false,
+          "schema" : {
+            "$ref" : "#/definitions/SearchBodyList"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "",
+            "schema" : {
+              "$ref" : "#/definitions/Qualification"
+            }
+          },
+          "400" : {
+            "description" : "Il campo 'message' contiene il dettaglio dell'errore",
+            "schema" : {
+              "$ref" : "#/definitions/RestResponse"
+            }
+          },
+          "500" : {
+            "description" : "Il campo 'message' contiene il dettaglio dell'errore",
+            "schema" : {
+              "$ref" : "#/definitions/RestResponse"
+            }
+          }
+        }
+      }
+    },
+    "/{company}/bom/{header}" : {
+      "get" : {
+        "tags" : [ "Produzione" ],
+        "summary" : "Restituisce la distinta base corrispondente al suo disba (header) ",
+        "description" : "",
+        "operationId" : "getBom",
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "company",
+          "in" : "path",
+          "required" : true,
+          "type" : "integer",
+          "format" : "int32"
+        }, {
+          "name" : "header",
+          "in" : "path",
+          "required" : true,
+          "type" : "string"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "",
+            "schema" : {
+              "$ref" : "#/definitions/BomHeader"
+            }
+          },
+          "400" : {
+            "description" : "Il campo 'message' contiene il dettaglio dell'errore",
+            "schema" : {
+              "$ref" : "#/definitions/RestResponse"
+            }
+          },
+          "500" : {
+            "description" : "Il campo 'message' contiene il dettaglio dell'errore",
+            "schema" : {
+              "$ref" : "#/definitions/RestResponse"
+            }
+          }
+        }
+      }
+    },
+    "/{company}/employees" : {
+      "get" : {
+        "tags" : [ "Produzione" ],
+        "summary" : "Restituisce una lista dei dipendenti corrispondente ai parametri di ricerca",
+        "description" : "",
+        "operationId" : "getEmployeeList",
+        "consumes" : [ "application/json" ],
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "page",
+          "in" : "query",
+          "required" : false,
+          "type" : "integer",
+          "default" : 0,
+          "format" : "int32"
+        }, {
+          "name" : "per_page",
+          "in" : "query",
+          "required" : false,
+          "type" : "integer",
+          "default" : 100,
+          "format" : "int32"
+        }, {
+          "name" : "company",
+          "in" : "path",
+          "required" : true,
+          "type" : "integer",
+          "format" : "int32"
+        }, {
+          "in" : "body",
+          "name" : "body",
+          "required" : false,
+          "schema" : {
+            "$ref" : "#/definitions/SearchBodyList"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "",
+            "schema" : {
+              "$ref" : "#/definitions/Employee"
+            }
+          },
+          "400" : {
+            "description" : "Il campo 'message' contiene il dettaglio dell'errore",
+            "schema" : {
+              "$ref" : "#/definitions/RestResponse"
+            }
+          },
+          "500" : {
+            "description" : "Il campo 'message' contiene il dettaglio dell'errore",
+            "schema" : {
+              "$ref" : "#/definitions/RestResponse"
+            }
+          }
+        }
+      }
+    },
+    "/{company}/boms" : {
+      "get" : {
+        "tags" : [ "Produzione" ],
+        "summary" : "Restituisce una lista di distinte basi corrispondente ai parametri di ricerca",
+        "description" : "",
+        "operationId" : "getBomList",
+        "consumes" : [ "application/json" ],
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "page",
+          "in" : "query",
+          "required" : false,
+          "type" : "integer",
+          "default" : 0,
+          "format" : "int32"
+        }, {
+          "name" : "per_page",
+          "in" : "query",
+          "required" : false,
+          "type" : "integer",
+          "default" : 100,
+          "format" : "int32"
+        }, {
+          "name" : "company",
+          "in" : "path",
+          "required" : true,
+          "type" : "integer",
+          "format" : "int32"
+        }, {
+          "in" : "body",
+          "name" : "body",
+          "required" : false,
+          "schema" : {
+            "$ref" : "#/definitions/SearchBodyList"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "",
+            "schema" : {
+              "$ref" : "#/definitions/BomHeader"
+            }
+          },
+          "400" : {
+            "description" : "Il campo 'message' contiene il dettaglio dell'errore",
+            "schema" : {
+              "$ref" : "#/definitions/RestResponse"
+            }
+          },
+          "500" : {
+            "description" : "Il campo 'message' contiene il dettaglio dell'errore",
+            "schema" : {
+              "$ref" : "#/definitions/RestResponse"
+            }
+          }
+        }
+      }
+    },
+    "/{company}/departments" : {
+      "get" : {
+        "tags" : [ "Produzione" ],
+        "summary" : "Restituisce una lista dei dipartimenti corrispondente ai parametri di ricerca",
+        "description" : "",
+        "operationId" : "getDepartmentList",
+        "consumes" : [ "application/json" ],
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "page",
+          "in" : "query",
+          "required" : false,
+          "type" : "integer",
+          "default" : 0,
+          "format" : "int32"
+        }, {
+          "name" : "per_page",
+          "in" : "query",
+          "required" : false,
+          "type" : "integer",
+          "default" : 100,
+          "format" : "int32"
+        }, {
+          "name" : "company",
+          "in" : "path",
+          "required" : true,
+          "type" : "integer",
+          "format" : "int32"
+        }, {
+          "in" : "body",
+          "name" : "body",
+          "required" : false,
+          "schema" : {
+            "$ref" : "#/definitions/SearchBodyList"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "",
+            "schema" : {
+              "$ref" : "#/definitions/Department"
             }
           },
           "400" : {
@@ -2164,6 +2677,12 @@
         "name" : {
           "type" : "string"
         },
+        "agentName" : {
+          "type" : "string"
+        },
+        "agentLastname" : {
+          "type" : "string"
+        },
         "address" : {
           "type" : "string"
         },
@@ -2184,6 +2703,9 @@
         "zonaManager" : {
           "type" : "integer",
           "format" : "int32"
+        },
+        "email" : {
+          "type" : "string"
         }
       }
     },
@@ -2225,6 +2747,17 @@
           "items" : {
             "$ref" : "#/definitions/SearchBody"
           }
+        }
+      }
+    },
+    "AttributeDTO" : {
+      "type" : "object",
+      "properties" : {
+        "name" : {
+          "type" : "string"
+        },
+        "value" : {
+          "type" : "string"
         }
       }
     },
@@ -2351,6 +2884,10 @@
         "price" : {
           "type" : "number",
           "format" : "double"
+        },
+        "lastchange" : {
+          "type" : "string",
+          "format" : "date-time"
         }
       }
     },
@@ -2413,6 +2950,9 @@
           "type" : "integer",
           "format" : "int32"
         },
+        "name" : {
+          "type" : "string"
+        },
         "netPrice" : {
           "type" : "number",
           "format" : "double"
@@ -2420,6 +2960,17 @@
         "grossPrice" : {
           "type" : "number",
           "format" : "double"
+        },
+        "currency" : {
+          "type" : "string"
+        },
+        "startDate" : {
+          "type" : "string",
+          "format" : "date-time"
+        },
+        "endDate" : {
+          "type" : "string",
+          "format" : "date-time"
         }
       }
     },
@@ -2464,6 +3015,10 @@
         "pieces" : {
           "type" : "number",
           "format" : "double"
+        },
+        "lastchange" : {
+          "type" : "string",
+          "format" : "date-time"
         }
       }
     },
@@ -2534,6 +3089,9 @@
         "code" : {
           "type" : "string"
         },
+        "externalCode" : {
+          "type" : "string"
+        },
         "name" : {
           "type" : "string"
         },
@@ -2553,6 +3111,12 @@
           "type" : "string"
         },
         "note" : {
+          "type" : "string"
+        },
+        "cellphone" : {
+          "type" : "string"
+        },
+        "telephone" : {
           "type" : "string"
         },
         "country" : {
@@ -2612,6 +3176,9 @@
         "name" : {
           "type" : "string"
         },
+        "additionalName" : {
+          "type" : "string"
+        },
         "interlocutorType" : {
           "type" : "boolean"
         },
@@ -2624,10 +3191,16 @@
         "zipCode" : {
           "type" : "string"
         },
+        "cityCode" : {
+          "type" : "string"
+        },
         "city" : {
           "type" : "string"
         },
         "province" : {
+          "type" : "string"
+        },
+        "location" : {
           "type" : "string"
         },
         "vatNumber" : {
@@ -2674,9 +3247,30 @@
           "type" : "number",
           "format" : "double"
         },
+        "sdi" : {
+          "type" : "string"
+        },
+        "corporateCredit" : {
+          "type" : "number",
+          "format" : "double"
+        },
+        "blockType" : {
+          "type" : "integer",
+          "format" : "int32"
+        },
+        "disposalDate" : {
+          "type" : "string",
+          "format" : "date-time"
+        },
         "lastchange" : {
           "type" : "string",
           "format" : "date-time"
+        },
+        "vat" : {
+          "$ref" : "#/definitions/Vat"
+        },
+        "country" : {
+          "$ref" : "#/definitions/Country"
         },
         "payment" : {
           "$ref" : "#/definitions/Payment"
@@ -2714,6 +3308,9 @@
         "defaultPriceCode" : {
           "type" : "integer",
           "format" : "int32"
+        },
+        "defaultDestinationCode" : {
+          "type" : "string"
         },
         "destinationList" : {
           "type" : "array",
@@ -2957,48 +3554,6 @@
         }
       }
     },
-    "ArticleInterlocutorDTO" : {
-      "type" : "object",
-      "required" : [ "article", "code", "interlocutor", "interlocutorType", "option", "preferential" ],
-      "properties" : {
-        "article" : {
-          "type" : "string",
-          "minLength" : 1,
-          "maxLength" : 25
-        },
-        "option" : {
-          "type" : "string",
-          "minLength" : 0,
-          "maxLength" : 20
-        },
-        "interlocutor" : {
-          "type" : "integer",
-          "format" : "int32"
-        },
-        "interlocutorType" : {
-          "type" : "boolean"
-        },
-        "code" : {
-          "type" : "string",
-          "minLength" : 1,
-          "maxLength" : 25
-        },
-        "preferential" : {
-          "type" : "boolean"
-        }
-      }
-    },
-    "AttributeDTO" : {
-      "type" : "object",
-      "properties" : {
-        "name" : {
-          "type" : "string"
-        },
-        "value" : {
-          "type" : "string"
-        }
-      }
-    },
     "ArticleInterlocutorPriceDTO" : {
       "type" : "object",
       "required" : [ "code", "endValidity", "interlocutor", "interlocutorType", "price", "startValidity" ],
@@ -3029,78 +3584,9 @@
         }
       }
     },
-    "ArticleDTO" : {
+    "ArticleInterlocutorDTO" : {
       "type" : "object",
-      "required" : [ "code", "description", "iva", "printInventory", "printNewspaper", "reorder", "um" ],
-      "properties" : {
-        "code" : {
-          "type" : "string",
-          "minLength" : 1,
-          "maxLength" : 25
-        },
-        "option" : {
-          "type" : "string"
-        },
-        "description" : {
-          "type" : "string",
-          "minLength" : 1,
-          "maxLength" : 72
-        },
-        "iva" : {
-          "type" : "string",
-          "minLength" : 1,
-          "maxLength" : 4
-        },
-        "um" : {
-          "type" : "string",
-          "minLength" : 1,
-          "maxLength" : 3
-        },
-        "reorder" : {
-          "type" : "number",
-          "format" : "double"
-        },
-        "printNewspaper" : {
-          "type" : "boolean"
-        },
-        "printInventory" : {
-          "type" : "boolean"
-        },
-        "family" : {
-          "type" : "string",
-          "minLength" : 1,
-          "maxLength" : 4
-        },
-        "staticalGroup1" : {
-          "type" : "string",
-          "minLength" : 1,
-          "maxLength" : 4
-        },
-        "staticalGroup2" : {
-          "type" : "string",
-          "minLength" : 1,
-          "maxLength" : 4
-        },
-        "staticalGroup3" : {
-          "type" : "string",
-          "minLength" : 1,
-          "maxLength" : 4
-        },
-        "staticalGroup4" : {
-          "type" : "string",
-          "minLength" : 1,
-          "maxLength" : 4
-        },
-        "brand" : {
-          "type" : "string",
-          "minLength" : 1,
-          "maxLength" : 12
-        }
-      }
-    },
-    "BarcodeDTO" : {
-      "type" : "object",
-      "required" : [ "article", "code", "option", "pieces" ],
+      "required" : [ "article", "code", "interlocutor", "interlocutorType", "option", "preferential" ],
       "properties" : {
         "article" : {
           "type" : "string",
@@ -3112,14 +3598,20 @@
           "minLength" : 0,
           "maxLength" : 20
         },
+        "interlocutor" : {
+          "type" : "integer",
+          "format" : "int32"
+        },
+        "interlocutorType" : {
+          "type" : "boolean"
+        },
         "code" : {
           "type" : "string",
           "minLength" : 1,
-          "maxLength" : 40
+          "maxLength" : 25
         },
-        "pieces" : {
-          "type" : "number",
-          "format" : "double"
+        "preferential" : {
+          "type" : "boolean"
         }
       }
     },
@@ -3152,6 +3644,31 @@
         "endValidity" : {
           "type" : "string",
           "format" : "date"
+        }
+      }
+    },
+    "BarcodeDTO" : {
+      "type" : "object",
+      "required" : [ "article", "code", "option", "pieces" ],
+      "properties" : {
+        "article" : {
+          "type" : "string",
+          "minLength" : 1,
+          "maxLength" : 25
+        },
+        "option" : {
+          "type" : "string",
+          "minLength" : 0,
+          "maxLength" : 20
+        },
+        "code" : {
+          "type" : "string",
+          "minLength" : 1,
+          "maxLength" : 40
+        },
+        "pieces" : {
+          "type" : "number",
+          "format" : "double"
         }
       }
     },
@@ -3225,6 +3742,75 @@
         }
       }
     },
+    "ArticleDTO" : {
+      "type" : "object",
+      "required" : [ "code", "description", "iva", "printInventory", "printNewspaper", "reorder", "um" ],
+      "properties" : {
+        "code" : {
+          "type" : "string",
+          "minLength" : 1,
+          "maxLength" : 25
+        },
+        "option" : {
+          "type" : "string"
+        },
+        "description" : {
+          "type" : "string",
+          "minLength" : 1,
+          "maxLength" : 72
+        },
+        "iva" : {
+          "type" : "string",
+          "minLength" : 1,
+          "maxLength" : 4
+        },
+        "um" : {
+          "type" : "string",
+          "minLength" : 1,
+          "maxLength" : 3
+        },
+        "reorder" : {
+          "type" : "number",
+          "format" : "double"
+        },
+        "printNewspaper" : {
+          "type" : "boolean"
+        },
+        "printInventory" : {
+          "type" : "boolean"
+        },
+        "family" : {
+          "type" : "string",
+          "minLength" : 1,
+          "maxLength" : 4
+        },
+        "staticalGroup1" : {
+          "type" : "string",
+          "minLength" : 1,
+          "maxLength" : 4
+        },
+        "staticalGroup2" : {
+          "type" : "string",
+          "minLength" : 1,
+          "maxLength" : 4
+        },
+        "staticalGroup3" : {
+          "type" : "string",
+          "minLength" : 1,
+          "maxLength" : 4
+        },
+        "staticalGroup4" : {
+          "type" : "string",
+          "minLength" : 1,
+          "maxLength" : 4
+        },
+        "brand" : {
+          "type" : "string",
+          "minLength" : 1,
+          "maxLength" : 12
+        }
+      }
+    },
     "Company" : {
       "type" : "object",
       "properties" : {
@@ -3237,120 +3823,25 @@
         }
       }
     },
-    "DocumentResult" : {
+    "IJobDocument" : {
       "type" : "object",
       "properties" : {
+        "id" : {
+          "type" : "integer",
+          "format" : "int32"
+        },
         "registrationNumber" : {
           "type" : "string"
         },
-        "code" : {
-          "type" : "string"
-        },
-        "number" : {
-          "type" : "string"
-        }
-      }
-    },
-    "DocumentHeaderDTO" : {
-      "type" : "object",
-      "required" : [ "code", "date", "interlocutor", "interlocutorType", "payment", "rows" ],
-      "properties" : {
-        "date" : {
-          "type" : "string",
-          "format" : "date"
-        },
-        "registrationDate" : {
-          "type" : "string",
-          "format" : "date"
-        },
-        "code" : {
-          "type" : "string",
-          "minLength" : 1,
-          "maxLength" : 20
-        },
-        "interlocutor" : {
+        "rowNumber" : {
           "type" : "integer",
           "format" : "int32"
         },
-        "interlocutorType" : {
-          "type" : "boolean"
-        },
-        "destination" : {
-          "type" : "string",
-          "minLength" : 1,
-          "maxLength" : 4
-        },
-        "yourDocumentNumber" : {
-          "type" : "string",
-          "minLength" : 1,
-          "maxLength" : 15
-        },
-        "yourDocumentReference" : {
-          "type" : "string",
-          "minLength" : 1,
-          "maxLength" : 72
-        },
-        "yourDocumentDate" : {
-          "type" : "string",
-          "format" : "date"
-        },
-        "payment" : {
-          "type" : "string",
-          "minLength" : 1,
-          "maxLength" : 6
-        },
-        "headerDiscount" : {
-          "type" : "number",
-          "format" : "double"
-        },
-        "agent" : {
-          "type" : "string",
-          "minLength" : 1,
-          "maxLength" : 20
-        },
-        "note" : {
-          "type" : "string",
-          "minLength" : 1,
-          "maxLength" : 240
-        },
-        "rows" : {
-          "type" : "array",
-          "items" : {
-            "$ref" : "#/definitions/DocumentRowDTO"
-          },
-          "maxItems" : 2147483647,
-          "minItems" : 1
-        }
-      }
-    },
-    "DocumentRowDTO" : {
-      "type" : "object",
-      "required" : [ "gift", "price", "quantity", "rowType" ],
-      "properties" : {
-        "rowType" : {
-          "type" : "integer",
-          "format" : "int32"
-        },
-        "article" : {
-          "type" : "string",
-          "minLength" : 1,
-          "maxLength" : 25
-        },
-        "articleOption" : {
-          "type" : "string",
-          "minLength" : 1,
-          "maxLength" : 20
-        },
-        "expense" : {
+        "articleCode" : {
           "type" : "string"
         },
-        "fixedText" : {
+        "option" : {
           "type" : "string"
-        },
-        "description" : {
-          "type" : "string",
-          "minLength" : 1,
-          "maxLength" : 1600
         },
         "quantity" : {
           "type" : "number",
@@ -3360,47 +3851,117 @@
           "type" : "number",
           "format" : "double"
         },
-        "percentageDiscount1" : {
+        "amount" : {
           "type" : "number",
           "format" : "double"
         },
-        "percentageDiscount2" : {
+        "job" : {
+          "type" : "string"
+        },
+        "subJob" : {
+          "type" : "string"
+        },
+        "description" : {
+          "type" : "string"
+        },
+        "lastchange" : {
+          "type" : "string",
+          "format" : "date-time"
+        },
+        "interlocutorCode" : {
+          "type" : "integer",
+          "format" : "int32"
+        },
+        "interlocutorType" : {
+          "type" : "boolean"
+        },
+        "linkId" : {
+          "type" : "integer",
+          "format" : "int32"
+        },
+        "time" : {
+          "type" : "integer",
+          "format" : "int32"
+        },
+        "umTime" : {
+          "type" : "integer",
+          "format" : "int32"
+        },
+        "qualification" : {
+          "type" : "string"
+        },
+        "department" : {
+          "type" : "string"
+        },
+        "billingType" : {
+          "type" : "string"
+        },
+        "deliveryDate" : {
+          "type" : "string",
+          "format" : "date-time"
+        },
+        "projectState" : {
+          "type" : "string"
+        },
+        "projectDescription" : {
+          "type" : "string"
+        },
+        "processingType" : {
+          "type" : "string"
+        },
+        "processingDescription" : {
+          "type" : "string"
+        },
+        "expenseIndex" : {
+          "type" : "string"
+        },
+        "expenseDescription" : {
+          "type" : "string"
+        }
+      }
+    },
+    "Commission" : {
+      "type" : "object",
+      "properties" : {
+        "id" : {
+          "type" : "string"
+        },
+        "header" : {
+          "$ref" : "#/definitions/DocumentHeader"
+        },
+        "agent" : {
+          "$ref" : "#/definitions/Agent"
+        },
+        "taxable" : {
           "type" : "number",
           "format" : "double"
         },
-        "percentageDiscount3" : {
+        "amount" : {
           "type" : "number",
           "format" : "double"
         },
-        "percentageDiscount4" : {
+        "media" : {
           "type" : "number",
           "format" : "double"
         },
-        "percentageDiscount5" : {
-          "type" : "number",
-          "format" : "double"
+        "note" : {
+          "type" : "string"
+        }
+      }
+    },
+    "Department" : {
+      "type" : "object",
+      "properties" : {
+        "id" : {
+          "type" : "string"
         },
-        "percentageDiscount6" : {
-          "type" : "number",
-          "format" : "double"
+        "code" : {
+          "type" : "string"
         },
-        "amountDiscount" : {
-          "type" : "number",
-          "format" : "double"
+        "description" : {
+          "type" : "string"
         },
-        "percentageIncrease1" : {
-          "type" : "number",
-          "format" : "double"
-        },
-        "percentageIncrease2" : {
-          "type" : "number",
-          "format" : "double"
-        },
-        "amountIncrease" : {
-          "type" : "number",
-          "format" : "double"
-        },
-        "gift" : {
+        "blocked" : {
           "type" : "boolean"
         }
       }
@@ -3451,10 +4012,37 @@
           "type" : "number",
           "format" : "double"
         },
+        "processed" : {
+          "type" : "integer",
+          "format" : "int32"
+        },
+        "model" : {
+          "type" : "integer",
+          "format" : "int32"
+        },
+        "deliveryDate" : {
+          "type" : "string",
+          "format" : "date-time"
+        },
+        "note" : {
+          "type" : "string"
+        },
+        "project" : {
+          "$ref" : "#/definitions/Project"
+        },
+        "node" : {
+          "$ref" : "#/definitions/Node"
+        },
         "documentRowList" : {
           "type" : "array",
           "items" : {
             "$ref" : "#/definitions/DocumentRow"
+          }
+        },
+        "commissionList" : {
+          "type" : "array",
+          "items" : {
+            "$ref" : "#/definitions/Commission"
           }
         }
       }
@@ -3549,6 +4137,104 @@
         },
         "gift" : {
           "type" : "boolean"
+        },
+        "processed" : {
+          "type" : "integer",
+          "format" : "int32"
+        },
+        "deliveryDate" : {
+          "type" : "string",
+          "format" : "date-time"
+        },
+        "project" : {
+          "$ref" : "#/definitions/Project"
+        },
+        "node" : {
+          "$ref" : "#/definitions/Node"
+        },
+        "employee" : {
+          "$ref" : "#/definitions/Employee"
+        }
+      }
+    },
+    "Employee" : {
+      "type" : "object",
+      "properties" : {
+        "id" : {
+          "type" : "string"
+        },
+        "qualification" : {
+          "$ref" : "#/definitions/Qualification"
+        },
+        "department" : {
+          "$ref" : "#/definitions/Department"
+        },
+        "code" : {
+          "type" : "string"
+        },
+        "name" : {
+          "type" : "string"
+        },
+        "lastname" : {
+          "type" : "string"
+        },
+        "address" : {
+          "type" : "string"
+        },
+        "zip" : {
+          "type" : "string"
+        },
+        "city" : {
+          "type" : "string"
+        },
+        "province" : {
+          "type" : "string"
+        },
+        "note" : {
+          "type" : "string"
+        },
+        "blocked" : {
+          "type" : "boolean"
+        },
+        "cost" : {
+          "$ref" : "#/definitions/EmployeeCost"
+        }
+      }
+    },
+    "EmployeeCost" : {
+      "type" : "object",
+      "properties" : {
+        "id" : {
+          "type" : "string"
+        },
+        "code" : {
+          "type" : "string"
+        },
+        "value" : {
+          "type" : "string"
+        },
+        "type" : {
+          "type" : "integer",
+          "format" : "int32"
+        },
+        "ordinaryWorkday" : {
+          "type" : "number",
+          "format" : "double"
+        },
+        "holidayWorkday" : {
+          "type" : "number",
+          "format" : "double"
+        },
+        "ordinaryOvertime" : {
+          "type" : "number",
+          "format" : "double"
+        },
+        "holidayOvertime" : {
+          "type" : "number",
+          "format" : "double"
+        },
+        "note" : {
+          "type" : "string"
         }
       }
     },
@@ -3580,72 +4266,398 @@
         }
       }
     },
-    "DestinationDTO" : {
+    "Node" : {
       "type" : "object",
-      "required" : [ "code", "interlocutor", "interlocutorType", "name" ],
       "properties" : {
+        "id" : {
+          "type" : "string"
+        },
+        "project" : {
+          "$ref" : "#/definitions/Project"
+        },
+        "code" : {
+          "type" : "string"
+        },
+        "description" : {
+          "type" : "string"
+        }
+      }
+    },
+    "Project" : {
+      "type" : "object",
+      "properties" : {
+        "id" : {
+          "type" : "string"
+        },
+        "code" : {
+          "type" : "string"
+        },
+        "description" : {
+          "type" : "string"
+        },
+        "start" : {
+          "type" : "string",
+          "format" : "date-time"
+        },
+        "end" : {
+          "type" : "string",
+          "format" : "date-time"
+        },
+        "close" : {
+          "type" : "string",
+          "format" : "date-time"
+        },
         "interlocutor" : {
+          "$ref" : "#/definitions/Interlocutor"
+        },
+        "destination" : {
+          "$ref" : "#/definitions/Destination"
+        }
+      }
+    },
+    "Qualification" : {
+      "type" : "object",
+      "properties" : {
+        "id" : {
+          "type" : "string"
+        },
+        "code" : {
+          "type" : "string"
+        },
+        "description" : {
+          "type" : "string"
+        },
+        "workingHours" : {
           "type" : "integer",
           "format" : "int32"
+        }
+      }
+    },
+    "DocumentResult" : {
+      "type" : "object",
+      "properties" : {
+        "registrationNumber" : {
+          "type" : "string"
+        },
+        "code" : {
+          "type" : "string"
+        },
+        "number" : {
+          "type" : "string"
+        }
+      }
+    },
+    "DocumentHeaderDTO" : {
+      "type" : "object",
+      "required" : [ "code", "date", "interlocutor", "interlocutorType", "payment", "rows" ],
+      "properties" : {
+        "date" : {
+          "type" : "string",
+          "format" : "date"
+        },
+        "registrationDate" : {
+          "type" : "string",
+          "format" : "date"
         },
         "code" : {
           "type" : "string",
           "minLength" : 1,
-          "maxLength" : 4
+          "maxLength" : 20
         },
-        "externalCode" : {
-          "type" : "string",
-          "minLength" : 1,
-          "maxLength" : 14
+        "interlocutor" : {
+          "type" : "integer",
+          "format" : "int32"
         },
         "interlocutorType" : {
           "type" : "boolean"
         },
-        "name" : {
-          "type" : "string",
-          "minLength" : 0,
-          "maxLength" : 40
-        },
-        "address" : {
-          "type" : "string",
-          "minLength" : 0,
-          "maxLength" : 40
-        },
-        "zipCode" : {
-          "type" : "string",
-          "minLength" : 0,
-          "maxLength" : 5
-        },
-        "city" : {
-          "type" : "string",
-          "minLength" : 0,
-          "maxLength" : 40
-        },
-        "province" : {
-          "type" : "string",
-          "minLength" : 0,
-          "maxLength" : 2
-        },
-        "telephone" : {
-          "type" : "string",
-          "minLength" : 0,
-          "maxLength" : 20
-        },
-        "email" : {
-          "type" : "string",
-          "minLength" : 0,
-          "maxLength" : 128
-        },
-        "country" : {
+        "destination" : {
           "type" : "string",
           "minLength" : 1,
           "maxLength" : 4
+        },
+        "yourDocumentNumber" : {
+          "type" : "string",
+          "minLength" : 1,
+          "maxLength" : 15
+        },
+        "yourDocumentReference" : {
+          "type" : "string",
+          "minLength" : 1,
+          "maxLength" : 72
+        },
+        "yourDocumentDate" : {
+          "type" : "string",
+          "format" : "date"
+        },
+        "payment" : {
+          "type" : "string",
+          "minLength" : 1,
+          "maxLength" : 6
+        },
+        "headerDiscount" : {
+          "type" : "number",
+          "format" : "double"
+        },
+        "agent" : {
+          "type" : "string",
+          "minLength" : 1,
+          "maxLength" : 20
+        },
+        "note" : {
+          "type" : "string",
+          "minLength" : 1,
+          "maxLength" : 240
+        },
+        "number" : {
+          "type" : "integer",
+          "format" : "int32"
+        },
+        "sectional" : {
+          "type" : "string",
+          "minLength" : 1,
+          "maxLength" : 2
+        },
+        "warehouse" : {
+          "type" : "string",
+          "minLength" : 1,
+          "maxLength" : 2
+        },
+        "headerDeliveryDate" : {
+          "type" : "string",
+          "format" : "date"
+        },
+        "project" : {
+          "type" : "string",
+          "minLength" : 1,
+          "maxLength" : 25
+        },
+        "node" : {
+          "type" : "string",
+          "minLength" : 1,
+          "maxLength" : 25
+        },
+        "rows" : {
+          "type" : "array",
+          "items" : {
+            "$ref" : "#/definitions/DocumentRowDTO"
+          },
+          "maxItems" : 2147483647,
+          "minItems" : 1
+        }
+      }
+    },
+    "DocumentRowDTO" : {
+      "type" : "object",
+      "required" : [ "gift", "price", "quantity", "rowType" ],
+      "properties" : {
+        "rowType" : {
+          "type" : "integer",
+          "format" : "int32"
+        },
+        "article" : {
+          "type" : "string",
+          "minLength" : 1,
+          "maxLength" : 25
+        },
+        "articleOption" : {
+          "type" : "string",
+          "minLength" : 1,
+          "maxLength" : 20
+        },
+        "expense" : {
+          "type" : "string"
+        },
+        "fixedText" : {
+          "type" : "string"
+        },
+        "description" : {
+          "type" : "string",
+          "minLength" : 1,
+          "maxLength" : 1600
+        },
+        "quantity" : {
+          "type" : "number",
+          "format" : "double"
+        },
+        "price" : {
+          "type" : "number",
+          "format" : "double"
+        },
+        "percentageDiscount1" : {
+          "type" : "number",
+          "format" : "double"
+        },
+        "percentageDiscount2" : {
+          "type" : "number",
+          "format" : "double"
+        },
+        "percentageDiscount3" : {
+          "type" : "number",
+          "format" : "double"
+        },
+        "percentageDiscount4" : {
+          "type" : "number",
+          "format" : "double"
+        },
+        "percentageDiscount5" : {
+          "type" : "number",
+          "format" : "double"
+        },
+        "percentageDiscount6" : {
+          "type" : "number",
+          "format" : "double"
+        },
+        "amountDiscount" : {
+          "type" : "number",
+          "format" : "double"
+        },
+        "percentageIncrease1" : {
+          "type" : "number",
+          "format" : "double"
+        },
+        "percentageIncrease2" : {
+          "type" : "number",
+          "format" : "double"
+        },
+        "amountIncrease" : {
+          "type" : "number",
+          "format" : "double"
+        },
+        "gift" : {
+          "type" : "boolean"
+        },
+        "packaging" : {
+          "type" : "string",
+          "minLength" : 1,
+          "maxLength" : 12
+        },
+        "packNumber" : {
+          "type" : "number",
+          "format" : "double"
+        },
+        "rowDeliveryDate" : {
+          "type" : "string",
+          "format" : "date"
+        },
+        "project" : {
+          "type" : "string",
+          "minLength" : 1,
+          "maxLength" : 12
+        },
+        "node" : {
+          "type" : "string",
+          "minLength" : 1,
+          "maxLength" : 12
+        },
+        "activity" : {
+          "type" : "string",
+          "minLength" : 1,
+          "maxLength" : 12
+        },
+        "employee" : {
+          "type" : "string",
+          "minLength" : 1,
+          "maxLength" : 5
+        }
+      }
+    },
+    "Contact" : {
+      "type" : "object",
+      "properties" : {
+        "id" : {
+          "type" : "string"
+        },
+        "linkId" : {
+          "type" : "integer",
+          "format" : "int32"
+        },
+        "type" : {
+          "$ref" : "#/definitions/ContactType"
+        },
+        "generalCode" : {
+          "type" : "string"
+        },
+        "fullname" : {
+          "type" : "string"
+        },
+        "address" : {
+          "type" : "string"
+        },
+        "city" : {
+          "type" : "string"
+        },
+        "zip" : {
+          "type" : "string"
+        },
+        "province" : {
+          "type" : "string"
+        },
+        "telephone1" : {
+          "type" : "string"
+        },
+        "telephone2" : {
+          "type" : "string"
+        },
+        "telephoneHome" : {
+          "type" : "string"
+        },
+        "cellphone1" : {
+          "type" : "string"
+        },
+        "cellphone2" : {
+          "type" : "string"
+        },
+        "fax" : {
+          "type" : "string"
+        },
+        "pec" : {
+          "type" : "string"
+        },
+        "email1" : {
+          "type" : "string"
+        },
+        "email2" : {
+          "type" : "string"
+        },
+        "more1" : {
+          "type" : "string"
+        },
+        "more2" : {
+          "type" : "string"
+        },
+        "note" : {
+          "type" : "string"
+        },
+        "workingHours" : {
+          "type" : "string"
+        },
+        "preferential" : {
+          "type" : "boolean"
+        },
+        "lastchange" : {
+          "type" : "string",
+          "format" : "date-time"
+        }
+      }
+    },
+    "ContactType" : {
+      "type" : "object",
+      "properties" : {
+        "id" : {
+          "type" : "string"
+        },
+        "code" : {
+          "type" : "string"
+        },
+        "description" : {
+          "type" : "string"
         }
       }
     },
     "InterlocutorDTO" : {
       "type" : "object",
-      "required" : [ "interlocutor", "interlocutorType", "name", "naturalPerson" ],
+      "required" : [ "interlocutorType", "name", "naturalPerson" ],
       "properties" : {
         "interlocutor" : {
           "type" : "integer",
@@ -3759,6 +4771,69 @@
         }
       }
     },
+    "DestinationDTO" : {
+      "type" : "object",
+      "required" : [ "code", "interlocutor", "interlocutorType", "name" ],
+      "properties" : {
+        "interlocutor" : {
+          "type" : "integer",
+          "format" : "int32"
+        },
+        "code" : {
+          "type" : "string",
+          "minLength" : 1,
+          "maxLength" : 4
+        },
+        "externalCode" : {
+          "type" : "string",
+          "minLength" : 1,
+          "maxLength" : 14
+        },
+        "interlocutorType" : {
+          "type" : "boolean"
+        },
+        "name" : {
+          "type" : "string",
+          "minLength" : 0,
+          "maxLength" : 40
+        },
+        "address" : {
+          "type" : "string",
+          "minLength" : 0,
+          "maxLength" : 40
+        },
+        "zipCode" : {
+          "type" : "string",
+          "minLength" : 0,
+          "maxLength" : 5
+        },
+        "city" : {
+          "type" : "string",
+          "minLength" : 0,
+          "maxLength" : 40
+        },
+        "province" : {
+          "type" : "string",
+          "minLength" : 0,
+          "maxLength" : 2
+        },
+        "telephone" : {
+          "type" : "string",
+          "minLength" : 0,
+          "maxLength" : 20
+        },
+        "email" : {
+          "type" : "string",
+          "minLength" : 0,
+          "maxLength" : 128
+        },
+        "country" : {
+          "type" : "string",
+          "minLength" : 1,
+          "maxLength" : 4
+        }
+      }
+    },
     "PriceArticleInterlocutor" : {
       "type" : "object",
       "properties" : {
@@ -3771,6 +4846,12 @@
         "interlocutor" : {
           "$ref" : "#/definitions/Interlocutor"
         },
+        "code" : {
+          "type" : "string"
+        },
+        "name" : {
+          "type" : "string"
+        },
         "netPrice" : {
           "type" : "number",
           "format" : "double"
@@ -3778,6 +4859,117 @@
         "grossPrice" : {
           "type" : "number",
           "format" : "double"
+        },
+        "lastchange" : {
+          "type" : "string",
+          "format" : "date-time"
+        }
+      }
+    },
+    "PriceArticleInterlocutorDestination" : {
+      "type" : "object",
+      "properties" : {
+        "id" : {
+          "type" : "string"
+        },
+        "article" : {
+          "$ref" : "#/definitions/Article"
+        },
+        "interlocutor" : {
+          "$ref" : "#/definitions/Interlocutor"
+        },
+        "destination" : {
+          "$ref" : "#/definitions/Destination"
+        },
+        "code" : {
+          "type" : "string"
+        },
+        "name" : {
+          "type" : "string"
+        },
+        "netPrice" : {
+          "type" : "number",
+          "format" : "double"
+        },
+        "grossPrice" : {
+          "type" : "number",
+          "format" : "double"
+        },
+        "lastchange" : {
+          "type" : "string",
+          "format" : "date-time"
+        }
+      }
+    },
+    "BomComponent" : {
+      "type" : "object",
+      "properties" : {
+        "id" : {
+          "type" : "string"
+        },
+        "header" : {
+          "$ref" : "#/definitions/BomHeader"
+        },
+        "component" : {
+          "$ref" : "#/definitions/Article"
+        },
+        "sequence" : {
+          "type" : "integer",
+          "format" : "int32"
+        },
+        "startValidDate" : {
+          "type" : "string",
+          "format" : "date-time"
+        },
+        "endValidDate" : {
+          "type" : "string",
+          "format" : "date-time"
+        },
+        "note" : {
+          "type" : "string"
+        },
+        "quantity" : {
+          "type" : "integer",
+          "format" : "int32"
+        },
+        "lastchange" : {
+          "type" : "string",
+          "format" : "date-time"
+        }
+      }
+    },
+    "BomHeader" : {
+      "type" : "object",
+      "properties" : {
+        "id" : {
+          "type" : "string"
+        },
+        "headerId" : {
+          "type" : "integer",
+          "format" : "int32"
+        },
+        "article" : {
+          "$ref" : "#/definitions/Article"
+        },
+        "type" : {
+          "type" : "integer",
+          "format" : "int32"
+        },
+        "entity" : {
+          "type" : "string"
+        },
+        "note" : {
+          "type" : "string"
+        },
+        "lastchange" : {
+          "type" : "string",
+          "format" : "date-time"
+        },
+        "componentList" : {
+          "type" : "array",
+          "items" : {
+            "$ref" : "#/definitions/BomComponent"
+          }
         }
       }
     },
@@ -3813,7 +5005,7 @@
         "layout" : {
           "$ref" : "#/definitions/Layout"
         },
-        "quanity" : {
+        "quantity" : {
           "type" : "number",
           "format" : "double"
         },
